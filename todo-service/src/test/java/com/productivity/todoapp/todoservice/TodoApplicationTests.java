@@ -1,4 +1,4 @@
-package com.productivity.todoapp.todo_service;
+package com.productivity.todoapp.todoservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
