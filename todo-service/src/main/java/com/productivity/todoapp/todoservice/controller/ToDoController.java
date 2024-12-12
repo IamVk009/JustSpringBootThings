@@ -1,9 +1,9 @@
 package com.productivity.todoapp.todoservice.controller;
 
 import com.productivity.todoapp.todoservice.entity.ToDo;
+import com.productivity.todoapp.todoservice.response.ApiResponseMessage;
 import com.productivity.todoapp.todoservice.service.TodoService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,32 +18,56 @@ public class ToDoController {
     private final TodoService todoService;
 
     @PostMapping("/create")
-    public ResponseEntity<ToDo> addTodo(@RequestBody ToDo todo) {
+    public ResponseEntity<ApiResponseMessage<ToDo>> addTodo(@RequestBody ToDo todo) {
         ToDo toDo = todoService.createTodo(todo);
-        return new ResponseEntity<>(toDo, HttpStatus.CREATED);
+        ApiResponseMessage<ToDo> response = ApiResponseMessage.<ToDo>builder()
+                .status("Success")
+                .message("Todo Created")
+                .data(toDo)
+                .build();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/todos")
-    public ResponseEntity<List<ToDo>> todos() {
+    public ResponseEntity<ApiResponseMessage<List<ToDo>>> todos() {
         List<ToDo> todos = todoService.getAllTodos();
-        return new ResponseEntity<>(todos, HttpStatus.OK);
+        ApiResponseMessage<List<ToDo>> response = ApiResponseMessage.<List<ToDo>>builder()
+                .message("All Todos")
+                .status("Success")
+                .data(todos)
+                .build();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<ToDo>> getTodoById(@PathVariable String id) {
+    public ResponseEntity<ApiResponseMessage<Optional<ToDo>>> getTodoById(@PathVariable String id) {
         Optional<ToDo> todo = todoService.getTodoById(id);
-        return new ResponseEntity<>(todo, HttpStatus.OK);
+        ApiResponseMessage<Optional<ToDo>> response = ApiResponseMessage.<Optional<ToDo>>builder()
+                .message("Todo")
+                .status("Success")
+                .data(todo)
+                .build();
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<ToDo> update(@RequestBody ToDo toDo) {
+    public ResponseEntity<ApiResponseMessage<ToDo>> update(@RequestBody ToDo toDo) {
         ToDo updatedTodo = todoService.updateTodo(toDo);
-        return new ResponseEntity<>(updatedTodo, HttpStatus.OK);
+        ApiResponseMessage<ToDo> response = ApiResponseMessage.<ToDo>builder()
+                .message("Todo Updated")
+                .status("Success")
+                .data(updatedTodo)
+                .build();
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> delete(@PathVariable String id) {
+    public ResponseEntity<ApiResponseMessage<String>> delete(@PathVariable String id) {
         todoService.deleteTodo(id);
-        return new ResponseEntity<>("ToDo Deleted Successfully", HttpStatus.OK);
+        ApiResponseMessage<String> response = ApiResponseMessage.<String>builder()
+                .message("Todo Deleted")
+                .status("Success")
+                .build();
+        return ResponseEntity.ok(response);
     }
 }
