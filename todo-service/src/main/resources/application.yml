@@ -19,3 +19,13 @@ spring:
 # Server configuration
 server:
   port: 8080
+
+# Spring Boot Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health, metrics, info"    # Exposing common actuator endpoints only.
+  endpoint:
+    health:
+      show-details: always
