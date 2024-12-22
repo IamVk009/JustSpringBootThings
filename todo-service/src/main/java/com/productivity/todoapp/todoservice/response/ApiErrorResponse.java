@@ -1,6 +1,6 @@
 package com.productivity.todoapp.todoservice.response;
 
-import lombok.*;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 

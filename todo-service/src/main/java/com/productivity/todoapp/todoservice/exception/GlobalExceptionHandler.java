@@ -24,4 +24,16 @@ public class GlobalExceptionHandler {
                 request.getMethod());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(DatabaseException.class)
+    public ResponseEntity<ApiErrorResponse> handleDatabaseException(DatabaseException exception, HttpServletRequest request) {
+        ApiErrorResponse errorResponse
+                = new ApiErrorResponse(UUID.randomUUID().toString(),
+                exception.getMessage(),
+                exception.getHttpStatus().value(),
+                exception.getHttpStatus().name(),
+                request.getRequestURI(),
+                request.getMethod());
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }
