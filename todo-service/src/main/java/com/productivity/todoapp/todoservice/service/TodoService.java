@@ -1,19 +1,19 @@
 package com.productivity.todoapp.todoservice.service;
 
-import com.productivity.todoapp.todoservice.entity.ToDo;
+import com.productivity.todoapp.todoservice.dto.ToDoDto;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface TodoService {
 
-    ToDo createTodo(ToDo todo);
+    ToDoDto createTodo(ToDoDto toDoDto);
 
-    List<ToDo> getAllTodos();
+    List<ToDoDto> getAllTodos();
 
-    Optional<ToDo> getTodoById(String id);
+    ToDoDto getTodoById(String id);
 
-    ToDo updateTodo(ToDo toDo);
+    ToDoDto updateTodo(ToDoDto toDoDto);
 
     void deleteTodo(String id);
 }

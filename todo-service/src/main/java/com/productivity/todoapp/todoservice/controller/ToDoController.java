@@ -1,6 +1,6 @@
 package com.productivity.todoapp.todoservice.controller;
 
-import com.productivity.todoapp.todoservice.entity.ToDo;
+import com.productivity.todoapp.todoservice.dto.ToDoDto;
 import com.productivity.todoapp.todoservice.response.ApiResponseMessage;
 import com.productivity.todoapp.todoservice.service.TodoService;
 import lombok.RequiredArgsConstructor;
@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/todo")
@@ -18,9 +17,9 @@ public class ToDoController {
     private final TodoService todoService;
 
     @PostMapping("/create")
-    public ResponseEntity<ApiResponseMessage<ToDo>> addTodo(@RequestBody ToDo todo) {
-        ToDo toDo = todoService.createTodo(todo);
-        ApiResponseMessage<ToDo> response = ApiResponseMessage.<ToDo>builder()
+    public ResponseEntity<ApiResponseMessage<ToDoDto>> addTodo(@RequestBody ToDoDto toDoDto) {
+        ToDoDto toDo = todoService.createTodo(toDoDto);
+        ApiResponseMessage<ToDoDto> response = ApiResponseMessage.<ToDoDto>builder()
                 .status("Success")
                 .message("Todo Created")
                 .data(toDo)
@@ -29,9 +28,9 @@ public class ToDoController {
     }
 
     @GetMapping("/todos")
-    public ResponseEntity<ApiResponseMessage<List<ToDo>>> todos() {
-        List<ToDo> todos = todoService.getAllTodos();
-        ApiResponseMessage<List<ToDo>> response = ApiResponseMessage.<List<ToDo>>builder()
+    public ResponseEntity<ApiResponseMessage<List<ToDoDto>>> todos() {
+        List<ToDoDto> todos = todoService.getAllTodos();
+        ApiResponseMessage<List<ToDoDto>> response = ApiResponseMessage.<List<ToDoDto>>builder()
                 .message("All Todos")
                 .status("Success")
                 .data(todos)
@@ -40,9 +39,9 @@ public class ToDoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponseMessage<Optional<ToDo>>> getTodoById(@PathVariable String id) {
-        Optional<ToDo> todo = todoService.getTodoById(id);
-        ApiResponseMessage<Optional<ToDo>> response = ApiResponseMessage.<Optional<ToDo>>builder()
+    public ResponseEntity<ApiResponseMessage<ToDoDto>> getTodoById(@PathVariable String id) {
+        ToDoDto todo = todoService.getTodoById(id);
+        ApiResponseMessage<ToDoDto> response = ApiResponseMessage.<ToDoDto>builder()
                 .message("Todo")
                 .status("Success")
                 .data(todo)
@@ -51,9 +50,9 @@ public class ToDoController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<ApiResponseMessage<ToDo>> update(@RequestBody ToDo toDo) {
-        ToDo updatedTodo = todoService.updateTodo(toDo);
-        ApiResponseMessage<ToDo> response = ApiResponseMessage.<ToDo>builder()
+    public ResponseEntity<ApiResponseMessage<ToDoDto>> update(@RequestBody ToDoDto toDoDto) {
+        ToDoDto updatedTodo = todoService.updateTodo(toDoDto);
+        ApiResponseMessage<ToDoDto> response = ApiResponseMessage.<ToDoDto>builder()
                 .message("Todo Updated")
                 .status("Success")
                 .data(updatedTodo)
