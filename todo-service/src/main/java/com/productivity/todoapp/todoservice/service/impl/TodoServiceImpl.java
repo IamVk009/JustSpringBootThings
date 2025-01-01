@@ -8,6 +8,7 @@ import com.productivity.todoapp.todoservice.mapper.ToDoMapper;
 import com.productivity.todoapp.todoservice.repository.TodoRepository;
 import com.productivity.todoapp.todoservice.service.TodoService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class TodoServiceImpl implements TodoService {
 
     private final TodoRepository todoRepository;
@@ -29,6 +31,7 @@ public class TodoServiceImpl implements TodoService {
         } catch (DataAccessException exception) {
             throw new DatabaseException("Failed to save ToDo due to Database Error", exception, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+        log.info("Todo with ID : {} Created Successfully", toDo.getId());
         return entityToDto(toDo);
     }
 
@@ -42,6 +45,7 @@ public class TodoServiceImpl implements TodoService {
     @Override
     public ToDoDto getTodoById(String id) {
         Optional<ToDo> todo = todoRepository.findById(id);
+        log.info("Todo with ID : {} Fetched successfully.", id);
         return ToDoMapper.INSTANCE.mapOptionalToDto(todo);
     }
 
@@ -51,6 +55,7 @@ public class TodoServiceImpl implements TodoService {
         ToDo existingTodo = todoRepository.findById(toDo.getId()).orElseThrow(() -> new ToDoNotFoundException("Todo With Given Id : " + toDo.getId() + " does not Exist.", HttpStatus.NOT_FOUND));
         existingTodo.setTodo(toDo.getTodo());
         ToDo updatedTodo = todoRepository.save(existingTodo);
+        log.info("Todo with ID : {} Updated Successfully", updatedTodo.getId());
         return entityToDto(updatedTodo);
     }
 
@@ -58,6 +63,7 @@ public class TodoServiceImpl implements TodoService {
     public void deleteTodo(String id) {
         ToDo existingTodo = todoRepository.findById(id).orElseThrow(() -> new ToDoNotFoundException("Todo With Given Id : " + id + " does not Exist.", HttpStatus.NOT_FOUND));
         todoRepository.delete(existingTodo);
+        log.info("Todo with ID : {} Deleted Successfully", id);
     }
 
     private ToDoDto entityToDto(ToDo toDo) {

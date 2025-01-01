@@ -29,3 +29,12 @@ management:
   endpoint:
     health:
       show-details: always
+
+# Spring Boot Logging
+logging:
+  level:
+    root: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n" # Customized logs that are going to be displayed in console.
+#  file:
+#    name: logs/todoService.log # Store all application logs in separate log file
