@@ -28,10 +28,11 @@ public class TodoServiceImpl implements TodoService {
         ToDo toDo = dtoToEntity(toDoDto);
         try {
             todoRepository.save(toDo);
+            log.info("Todo with ID : {} Created Successfully", toDo.getId());
         } catch (DataAccessException exception) {
+            log.error("Failed to save ToDo due to Database Error : {} : {}", HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
             throw new DatabaseException("Failed to save ToDo due to Database Error", exception, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        log.info("Todo with ID : {} Created Successfully", toDo.getId());
         return entityToDto(toDo);
     }
 
