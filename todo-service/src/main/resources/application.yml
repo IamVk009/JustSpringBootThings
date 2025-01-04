@@ -38,3 +38,7 @@ logging:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n" # Customized logs that are going to be displayed in console.
 #  file:
 #    name: logs/todoService.log # Store all application logs in separate log file
+
+# Show actuator URLs in Swagger UI
+springdoc:
+  show-actuator: true
