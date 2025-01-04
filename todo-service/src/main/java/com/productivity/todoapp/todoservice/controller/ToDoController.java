@@ -25,12 +25,15 @@ public class ToDoController {
             @ApiResponse(responseCode = "500", description = "Invalid Request Data")
     })
     @PostMapping("/create")
-    public ResponseEntity<ApiResponseMessage<ToDoDto>> addTodo(@RequestBody ToDoDto toDoDto) {
-        ToDoDto toDo = todoService.createTodo(toDoDto);
+    public ResponseEntity<ApiResponseMessage<ToDoDto>> addTodo(@RequestParam String toDo) {
+        ToDoDto toDoDto = ToDoDto.builder()
+                .todo(toDo)
+                .build();
+        ToDoDto createdToDo = todoService.createTodo(toDoDto);
         ApiResponseMessage<ToDoDto> response = ApiResponseMessage.<ToDoDto>builder()
                 .status("Success")
                 .message("Todo Created")
-                .data(toDo)
+                .data(createdToDo)
                 .build();
         return ResponseEntity.ok(response);
     }
