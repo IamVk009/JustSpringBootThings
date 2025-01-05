@@ -6,6 +6,7 @@ import com.productivity.todoapp.todoservice.service.TodoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,10 +26,7 @@ public class ToDoController {
             @ApiResponse(responseCode = "500", description = "Invalid Request Data")
     })
     @PostMapping("/create")
-    public ResponseEntity<ApiResponseMessage<ToDoDto>> addTodo(@RequestParam String toDo) {
-        ToDoDto toDoDto = ToDoDto.builder()
-                .todo(toDo)
-                .build();
+    public ResponseEntity<ApiResponseMessage<ToDoDto>> addTodo(@Valid @RequestBody ToDoDto toDoDto) {
         ToDoDto createdToDo = todoService.createTodo(toDoDto);
         ApiResponseMessage<ToDoDto> response = ApiResponseMessage.<ToDoDto>builder()
                 .status("Success")
@@ -68,7 +66,7 @@ public class ToDoController {
             @ApiResponse(responseCode = "404", description = "Todo With Given Id does not Exist.")
     })
     @PutMapping("/update")
-    public ResponseEntity<ApiResponseMessage<ToDoDto>> update(@RequestBody ToDoDto toDoDto) {
+    public ResponseEntity<ApiResponseMessage<ToDoDto>> update(@Valid @RequestBody ToDoDto toDoDto) {
         ToDoDto updatedTodo = todoService.updateTodo(toDoDto);
         ApiResponseMessage<ToDoDto> response = ApiResponseMessage.<ToDoDto>builder()
                 .message("Todo Updated")
