@@ -1,9 +1,12 @@
 package com.app.chat.service.impl;
 
+import com.app.chat.entity.Message;
 import com.app.chat.entity.Room;
 import com.app.chat.repositories.RoomRepository;
 import com.app.chat.service.RoomService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class RoomServiceImpl implements RoomService {
@@ -32,5 +35,14 @@ public class RoomServiceImpl implements RoomService {
             throw new RuntimeException("Room with ID = " + roomId + " does not exist.");
         }
         return room;
+    }
+
+    @Override
+    public List<Message> getMessages(String roomId) {
+        Room room = roomRepository.findByRoomId(roomId);
+        if (room == null) {
+            throw new RuntimeException("Room with ID = " + roomId + " does not exist.");
+        }
+        return room.getMessages();
     }
 }
