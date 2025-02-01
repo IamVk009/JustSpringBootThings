@@ -1,0 +1,3 @@
+spring:
+  application:
+    name: ollama-spring-boot-backend-ai-project
