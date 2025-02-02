@@ -70,3 +70,7 @@ This API sends a prompt to the AI model and returns a **stream of responses** us
 ## Conclusion
 By following the steps above, you have successfully installed Ollama, set up DeepSeek:R1, and run the application. Now, you can send prompts and receive AI-generated responses. Happy coding!
 
+## Referances
+https://docs.spring.io/spring-ai/reference/1.0/api/chatclient.html
+
+https://docs.spring.io/spring-ai/reference/1.0/api/chat/ollama-chat.html
